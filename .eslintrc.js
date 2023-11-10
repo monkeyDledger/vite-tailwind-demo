@@ -12,5 +12,9 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   parserOptions: {
     parser: '@typescript-eslint/parser'
+  },
+  // 自定义规则
+  rules: {
+    'no-undef': 'off'
   }
 }
