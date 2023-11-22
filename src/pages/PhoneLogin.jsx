@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { loginByPhone } from '../service/login'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useUserStore } from '../stores/user'
 
 /**
@@ -32,11 +32,11 @@ export default function PhoneLogin() {
           localStorage.setItem('cookie', res.cookie)
           const profile = res.profile
           useUserStore.setState({ user: profile })
-          url = '/song-list'
+          let url = '/song-list'
           if (id) {
             url += `?id=${id}`
           }
-          navigate('/song-list')
+          navigate(url)
         }
       })
       .catch((err) => {
