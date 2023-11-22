@@ -7,6 +7,9 @@ import { useUserStore } from '../stores/user'
  * 手机号密码登录
  */
 export default function PhoneLogin() {
+  const [searchParams] = useSearchParams()
+  const id = searchParams.get('id')
+
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
@@ -29,6 +32,10 @@ export default function PhoneLogin() {
           localStorage.setItem('cookie', res.cookie)
           const profile = res.profile
           useUserStore.setState({ user: profile })
+          url = '/song-list'
+          if (id) {
+            url += `?id=${id}`
+          }
           navigate('/song-list')
         }
       })

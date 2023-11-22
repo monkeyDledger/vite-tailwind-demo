@@ -5,6 +5,7 @@ import { getSongDetail, sendMsgWithSong } from '../service/song'
 function SendMsg({ songId, users }) {
   const [songDetail, setSongDetail] = useState(null)
   const [msg, setMsg] = useState('')
+  const [sendRes, setSendRes] = useState('')
 
   useRequest(() => getSongDetail(songId), {
     refreshDeps: [songId],
@@ -16,22 +17,23 @@ function SendMsg({ songId, users }) {
     }
   })
 
-  const { run: send } = useRequest(sendMsgWithSong, {
+  const { run: send, loading } = useRequest(sendMsgWithSong, {
     manual: true,
     onSuccess: (res) => {
       if (res.code === 200) {
-        alert('已全部发送')
+        setSendRes('已全部寄出')
       } else {
-        alert('Oops, 寄件已被网易云拦截，稍后再试吧')
+        setSendRes('Oops, 寄件已被网易云拦截，稍后再试吧')
       }
     },
     onError: (err) => {
-      alert('Oops, 寄件已被网易云拦截，稍后再试吧')
+      setSendRes('Oops, 寄件已被网易云拦截，稍后再试吧')
     }
   })
 
   const handleSend = () => {
     if (!msg) return
+    setSendRes('')
     const modal = document.getElementById('progress-modal')
     if (modal) {
       modal.showModal()
@@ -70,10 +72,16 @@ function SendMsg({ songId, users }) {
       </div>
       <dialog id="progress-modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-md">快递派送中</h3>
-          <p className="py-4">
-            <progress className="progress w-56"></progress>
-          </p>
+          {loading && !sendRes ? (
+            <>
+              <h3 className="font-bold text-md">快递派送中</h3>
+              <p className="py-4">
+                <progress className="progress w-56"></progress>
+              </p>
+            </>
+          ) : (
+            <p className="font-bold text-md">{sendRes}</p>
+          )}
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>

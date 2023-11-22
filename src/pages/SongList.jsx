@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useUserStore } from '../stores/user'
+import { useSearchParams } from 'react-router-dom'
 import { useRequest } from 'ahooks'
 import { getCommentList, getTopSong, searchSong } from '../service/song'
 import SendMsg from './SendMsg'
@@ -11,14 +12,17 @@ const ArtistId = '54678821'
  * @returns
  */
 function SongList() {
+  const [searchParams] = useSearchParams()
   const user = useUserStore((state) => state.user)
   const [songList, setSongList] = useState([])
   const [songId, setSongId] = useState('')
   const [searchSongId, setSearchSongId] = useState('')
   const [userIds, setUserIds] = useState([])
 
+  const artistId = searchParams.get('id') || ArtistId
+
   const { data: songRes } = useRequest(getTopSong, {
-    defaultParams: [ArtistId]
+    defaultParams: [artistId]
   })
 
   const { run: search } = useRequest(searchSong, {
@@ -132,7 +136,7 @@ function SongList() {
           : null}
         {searchSongId && loadingComment && (
           <div className="flex gap-4 text-xs">
-            <span>正在获取前20条评论的用户</span>
+            <span>正在获取前50条评论的用户</span>
             <span className="loading loading-dots loading-xs" />
           </div>
         )}

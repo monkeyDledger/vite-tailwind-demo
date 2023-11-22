@@ -23,7 +23,7 @@ export const getSongDetail = (id: string) => {
   return request.get(`/song/detail?ids=${id}`)
 }
 
-export const getCommentList = (id: string, limit = 20) => {
+export const getCommentList = (id: string, limit = 50) => {
   return request.get(`/comment/music?id=${id}&limit=${limit}`)
 }
 
