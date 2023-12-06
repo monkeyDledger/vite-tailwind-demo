@@ -18,6 +18,7 @@ function SongList() {
   const [songId, setSongId] = useState('')
   const [searchSongId, setSearchSongId] = useState('')
   const [userIds, setUserIds] = useState([])
+  const [msg, setMsg] = useState('')
 
   const artistId = searchParams.get('id') || ArtistId
 
@@ -106,6 +107,14 @@ function SongList() {
             )
           })}
         </select>
+        <textarea
+          placeholder="填写私信文案"
+          className="textarea textarea-bordered textarea-md w-full max-w-xs"
+          value={msg}
+          onChange={(e) => {
+            setMsg(e.target.value)
+          }}
+        />
         <input
           type="text"
           className="input input-bordered w-full max-w-xs text-xs"
@@ -142,7 +151,7 @@ function SongList() {
         )}
         <div className="divider" />
         {searchSongId && !loadingComment ? (
-          <SendMsg songId={songId} users={userIds} />
+          <SendMsg songId={songId} users={userIds} msg={msg} />
         ) : null}
       </div>
     </div>

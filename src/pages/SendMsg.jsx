@@ -2,9 +2,8 @@ import { useRequest } from 'ahooks'
 import React, { useRef, useState } from 'react'
 import { getSongDetail, sendMsgWithSong } from '../service/song'
 
-function SendMsg({ songId, users }) {
+function SendMsg({ songId, users, msg }) {
   const [songDetail, setSongDetail] = useState(null)
-  const [msg, setMsg] = useState('')
   const [sendRes, setSendRes] = useState('')
 
   useRequest(() => getSongDetail(songId), {
@@ -45,14 +44,6 @@ function SendMsg({ songId, users }) {
   const { name, al } = songDetail
   return (
     <div className="flex flex-col gap-4">
-      <textarea
-        placeholder="填写私信内容"
-        className="textarea textarea-bordered textarea-md w-full max-w-xs"
-        value={msg}
-        onChange={(e) => {
-          setMsg(e.target.value)
-        }}
-      />
       <div
         className="card w-58 bg-base-100 shadow-xl image-full"
         style={{ width: '280px' }}
