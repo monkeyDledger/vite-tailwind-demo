@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client'
 import QRCodeLogin from './pages/QrLogin'
 import SongList from './pages/SongList'
 import PhoneLogin from './pages/PhoneLogin'
+import FanStat from './pages/stat'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/qr-login" element={<QRCodeLogin />} />
         <Route path="/phone-login" element={<PhoneLogin />} />
         <Route path="/song-list" element={<SongList />} />
+        <Route path="/stat" element={<FanStat />} />
         <Route
           path="/about"
           element={

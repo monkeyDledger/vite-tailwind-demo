@@ -8,7 +8,14 @@ function App(): ReactElement {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const id = searchParams.get('id')
+  const link = searchParams.get('link')
   const user = useUserStore((s) => s.user)
+
+  useEffect(() => {
+    if (link && user) {
+      navigate(`./${link}`)
+    }
+  }, [user])
 
   const handleStart = () => {
     const cookie = localStorage.getItem('cookie')

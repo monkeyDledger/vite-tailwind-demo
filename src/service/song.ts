@@ -41,3 +41,7 @@ export const sendMsgWithSong = (id: string, msg: string, uids: string[]) => {
   }
   return request.post('/send/song', data)
 }
+
+export const getFollowCount = (id: string) => {
+  return request.get(`/artist/follow/count?id=${id}`)
+}
